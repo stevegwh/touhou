@@ -6,16 +6,16 @@ function setup() {
   angleMode(DEGREES);
   stroke(255);
   strokeWeight(4);
-  spiral = new Spiral(width / 2 + 50, height / 2, 5, 60);
+  spiral = new Spiral(width / 2 + 50, height / 2, 5, 60, 4);
   spiral2 = new Spiral(width / 2 - 50, height / 2, 0.5, 60);
 }
 
 
 class Bullet {
-  constructor(x, y, v1, v2) {
+  constructor(x, y, v1, v2, speed) {
     this.pos = createVector(x, y);
     this.velocityRate = 2;
-    this.velocity = createVector(v1 * this.velocityRate, v2 * this.velocityRate);
+    this.velocity = createVector(v1 * speed, v2 * speed);
     this.acc = createVector(0, 0);
   }
   draw() {
@@ -29,13 +29,14 @@ class Bullet {
 }
 
 class Pattern {
-  constructor(x, y, rotationRate, amount) {
+  constructor(x, y, rotationRate, amount, movementSpeed = 2) {
     this.bullets = [];
     this.dt = 0; //delta time
     this.amount = amount; //amount of bullets to load
     this.count = 1; //says when to push new bullet
     this.pos = createVector(x, y); //position of pattern;
-    this.rotationRate = rotationRate;
+    this.rotationRate = rotationRate; //how fast the pattern executes
+    this.movementSpeed = movementSpeed; //how fast each bullet moves
   }
   draw() {
     for (var i = 1; i < this.bullets.length; i++) {
@@ -58,14 +59,14 @@ class Spiral extends Pattern {
   loadBullet() {
     const segment = 360 / this.amount;
     const angle = segment * this.count;
-    this.bullets.push(new Bullet(this.pos.x, this.pos.y, cos(angle), sin(angle)));
+    this.bullets.push(new Bullet(this.pos.x, this.pos.y, cos(angle), sin(angle), this.movementSpeed));
   }
 }
 
 function draw() {
   background(0);
-  // spiral.draw();
-  // spiral.update();
+  spiral.draw();
+  spiral.update();
   spiral2.draw();
   spiral2.update();
 
