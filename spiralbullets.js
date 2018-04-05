@@ -1,13 +1,17 @@
 let bullets = [];
-var spiral, spiral2;
+var spiral, spiral2, rose;
 
 function setup() {
   createCanvas(800, 600);
   angleMode(DEGREES);
   stroke(255);
   strokeWeight(4);
-  spiral = new Spiral(width / 2 + 50, height / 2, 5, 60, 4);
-  spiral2 = new Spiral(width / 2 - 50, height / 2, 0.5, 60);
+  spiral = new Pattern(width / 2 + 50, height / 2, 1, 60, 720, null, 4);
+  spiral2 = new Pattern(width / 2 - 50, height / 2, 0.5, 1, 10, 180);
+  rose = new Pattern(width/2, height/2, 2, 50, 720, 12, 4);
+  //cool patterns
+  //rose = new Pattern(width/2 - 50, height/2, 2, 50, 720, 12, 3);
+  //starfish = new Pattern(width/2 - 50, height/2, 1, 20, 720, 32, 6);
 }
 
 
@@ -29,7 +33,7 @@ class Bullet {
 }
 
 class Pattern {
-  constructor(x, y, rotationRate, amount, movementSpeed = 2) {
+  constructor(x, y, rotationRate, amount, maxAngle, k = 8, movementSpeed = 2) {
     this.bullets = [];
     this.dt = 0; //delta time
     this.amount = amount; //amount of bullets to load
@@ -37,6 +41,9 @@ class Pattern {
     this.pos = createVector(x, y); //position of pattern;
     this.rotationRate = rotationRate; //how fast the pattern executes
     this.movementSpeed = movementSpeed; //how fast each bullet moves
+    this.maxAngle = maxAngle //how far to turn
+    this.k = k;
+    //TO DO: add starting angle
   }
   draw() {
     for (var i = 1; i < this.bullets.length; i++) {
@@ -53,21 +60,19 @@ class Pattern {
       this.dt++;
     }
   }
-}
-
-class Spiral extends Pattern {
   loadBullet() {
-    const segment = 360 / this.amount;
+    const segment = this.maxAngle / this.amount;
     const angle = segment * this.count;
-    this.bullets.push(new Bullet(this.pos.x, this.pos.y, cos(angle), sin(angle), this.movementSpeed));
+    this.bullets.push(new Bullet(this.pos.x, this.pos.y, cos(angle * this.k), sin(angle * this.k), this.movementSpeed));
   }
 }
-
 function draw() {
   background(0);
-  spiral.draw();
-  spiral.update();
-  spiral2.draw();
-  spiral2.update();
-
+  // spiral.draw();
+  // spiral.update();
+  // spiral2.draw();
+  // spiral2.update();
+  ellipse(width/2, height/2, 50)
+  rose.draw();
+  rose.update();
 }
