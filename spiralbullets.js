@@ -7,6 +7,7 @@ function setup() {
   angleMode(DEGREES);
   stroke(255);
   strokeWeight(4);
+  player = new Player();
   spiral = new Spiral(width / 2 + 50, height / 2, 1, 60, 720, null, 4);
   spiral2 = new Spiral(width / 2 - 50, height / 2, 0.5, 1, 10, 180);
   rose = new Spiral(width / 2, height / 2, 2, 50, 720, 12, 4);
@@ -21,26 +22,31 @@ function draw() {
   // spiral.update();
   // spiral2.draw();
   // spiral2.update();
+  player.update();
   for (var i = 0; i < patterns.length; i++) {
-    patterns[i].draw();
     patterns[i].update();
-  }
-
-  for(var i = 0; i < bullets.length; i++) {
-    bullets[i].draw();
-    bullets[i].update();
   }
 }
 
+// function keyPressed() {
+//   if (keyCode === UP_ARROW) {
+//     patterns.push(new Spiral(mouseX, mouseY, 2, 50, 720, 12, 3));
+//   } else if (keyCode === DOWN_ARROW) {
+//     patterns.push(new Spiral(mouseX, mouseY, 1, 20, 720, 32, 6));
+//   } else if (keyCode === LEFT_ARROW) {
+//     patterns.push(new Spiral(mouseX, mouseY, 2, 70, 360, 7, 4));
+//   } else if (keyCode === 32) {
+//     bullets.push(new Bullet(mouseX, mouseY, 0, -5, 1));
+//   }
+
+// }
 function keyPressed() {
+  player.move(keyCode);
   if (keyCode === UP_ARROW) {
     patterns.push(new Spiral(mouseX, mouseY, 2, 50, 720, 12, 3));
   } else if (keyCode === DOWN_ARROW) {
     patterns.push(new Spiral(mouseX, mouseY, 1, 20, 720, 32, 6));
   } else if (keyCode === LEFT_ARROW) {
     patterns.push(new Spiral(mouseX, mouseY, 2, 70, 360, 7, 4));
-  } else if (keyCode === 32) {
-    bullets.push(new Bullet(mouseX, mouseY, 0, -5, 1));
   }
-
 }
