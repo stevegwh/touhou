@@ -14,6 +14,10 @@ class Spiral {
     draw() {
         for (var i = 1; i < this.bullets.length; i++) {
             this.bullets[i].update();
+            if(this.bullets[i].checkCollision(player, 20)) {
+                player.alive = false;
+                this.bullets.splice(i, 1);
+            }
         }
     }
     update() {

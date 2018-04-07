@@ -1,24 +1,36 @@
 class Player {
     constructor() {
-        this.pos = createVector(height - 20, width / 2);
+        this.pos = createVector(width/2, height-20);
+        this.r = 20;
         this.velocity = createVector(0, 0);
         this.bullets = [];
         this.shotTimer = 0;
         this.lastShot = 10;
         this.movementSpeed = 5;
+        this.alive = true;
     }
     drawPlayer() {
         push();
         fill(100, 100, 255);
-        ellipse(this.pos.x, this.pos.y, 20, 20);
+        ellipse(this.pos.x, this.pos.y, this.r);
         pop();
     }
     drawBullets() {
         for (var i = 0; i < this.bullets.length; i++) {
             this.bullets[i].update();
+            for(var j = 0; j < enemies.length; j++) {
+                if(this.bullets[i].checkCollision(enemies[j])) {
+                    this.bullets.splice(i, 1);
+                    enemies.splice(j, 1);
+                }
+            }
         }
     }
     update() {
+        if(!this.alive) {
+            this.pos.x = -500;
+            return;
+        }
         this.shotTimer++;
         this.drawPlayer();
         this.drawBullets();

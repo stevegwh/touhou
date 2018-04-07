@@ -4,11 +4,12 @@ class Enemy {
         this.velocity = createVector(0, 0);
         this.acc = createVector(0,0);
         this.movementSpeed = 0.1;
+        this.r = 20;
         this.patterns = [];
         this.directions = [
             {"dir" : createVector(20, 20), "pause" : 140, "fired" : false}, 
-            {"dir" : createVector(200, 400), "pause" : 140, "fired" : false}, 
-            {"dir" : createVector(width - 20, 100), "pause" : 140, "fired" : false}
+            {"dir" : createVector(400, 600), "pause" : 200, "fired" : false}, 
+            {"dir" : createVector(width - 20, 800), "pause" : 140, "fired" : false}
         ];
         this.dirCount = 0;
         this.pauseCount = 0;
@@ -16,7 +17,7 @@ class Enemy {
     drawEnemy() {
         push();
         fill(255, 100, 255);
-        ellipse(this.pos.x, this.pos.y, 20, 20);
+        ellipse(this.pos.x, this.pos.y, this.r);
         pop();
     }
     drawPattern() {
@@ -61,7 +62,7 @@ class Enemy {
     update() {
         this.drawEnemy();
         this.drawPattern();
-        
+
         this.pos.add(this.velocity);
         this.velocity.add(this.acc);
 

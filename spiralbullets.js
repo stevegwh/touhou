@@ -1,6 +1,7 @@
-var spiral, spiral2, rose;
+var spiral, spiral2, rose, enemy, player;
 let patterns = [];
 let bullets = [];
+let enemies = [];
 
 function setup() {
   createCanvas(600, 800);
@@ -8,7 +9,7 @@ function setup() {
   stroke(255);
   strokeWeight(4);
   player = new Player();
-  enemy = new Enemy();
+  enemies.push(new Enemy());
   spiral = new Spiral(width / 2 + 50, height / 2, 1, 60, 720, null, 4);
   spiral2 = new Spiral(width / 2 - 50, height / 2, 0.5, 1, 10, 180);
   rose = new Spiral(width / 2, height / 2, 2, 50, 720, 12, 4);
@@ -24,7 +25,9 @@ function draw() {
   // spiral2.draw();
   // spiral2.update();
   player.update();
-  enemy.update();
+  for(var i = 0; i < enemies.length; i++) {
+    enemies[i].update();
+  }
 
 }
 
