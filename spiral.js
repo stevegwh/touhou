@@ -1,6 +1,5 @@
 class Spiral {
     constructor(x, y, rotationRate, amount, maxAngle, k = 8, movementSpeed = 2) {
-        this.bullets = [];
         this.dt = 0; //delta time
         this.amount = amount; //amount of bullets to load
         this.count = 1; //says when to push new bullet
@@ -11,17 +10,7 @@ class Spiral {
         this.k = k;
         //TO DO: add starting angle
     }
-    draw() {
-        for (var i = 1; i < this.bullets.length; i++) {
-            this.bullets[i].update();
-            if(this.bullets[i].checkCollision(player, 20)) {
-                player.alive = false;
-                this.bullets.splice(i, 1);
-            }
-        }
-    }
     update() {
-        this.draw();
         if (floor(this.dt) >= this.rotationRate && this.count !== this.amount) {
             this.loadBullet();
             this.dt = 0;
@@ -33,6 +22,6 @@ class Spiral {
     loadBullet() {
         const segment = this.maxAngle / this.amount;
         const angle = segment * this.count;
-        this.bullets.push(new Bullet(this.pos.x, this.pos.y, cos(angle * this.k), sin(angle * this.k), this.movementSpeed));
+        bullets.push(new Bullet(this.pos.x, this.pos.y, cos(angle * this.k), sin(angle * this.k), this.movementSpeed));
     }
 }

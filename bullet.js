@@ -20,4 +20,12 @@ class Bullet {
             return true;
         }
     }
-}
+    outOfBounds() {
+        const offset = 100;
+        if(this.pos.x > width + offset || 
+            this.pos.x < 0 - offset || 
+            this.y > height + offset || 
+            this.y < 0 - offset)
+        return true;
+    }
+} 

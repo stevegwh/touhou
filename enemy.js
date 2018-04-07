@@ -1,16 +1,13 @@
 class Enemy {
-    constructor() {
-        this.pos = createVector(20, 20);
+    constructor(x, y, r, movementSpeed, directions, availablePatterns) {
+        this.pos = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acc = createVector(0,0);
-        this.movementSpeed = 0.1;
-        this.r = 20;
+        this.movementSpeed = movementSpeed;
+        this.r = r;
+        this.availablePatterns = availablePatterns;
         this.patterns = [];
-        this.directions = [
-            {"dir" : createVector(20, 20), "pause" : 140, "fired" : false}, 
-            {"dir" : createVector(400, 600), "pause" : 200, "fired" : false}, 
-            {"dir" : createVector(width - 20, 800), "pause" : 140, "fired" : false}
-        ];
+        this.directions = directions;
         this.dirCount = 0;
         this.pauseCount = 0;
     }
@@ -55,7 +52,8 @@ class Enemy {
     }
     fire() {
         if(!this.directions[this.dirCount]["fired"]) {
-            this.patterns.push(new Spiral(this.pos.x, this.pos.y, 2, 50, 720, 12, 3));
+            const p = this.availablePatterns[0];
+            this.patterns.push(this.patternGenerator(p.name, p.rotationRate, p.amount, p.maxAngle, p.k, p.movementSpeed));
             this.directions[this.dirCount]["fired"] = true;
         }
     }
@@ -74,5 +72,36 @@ class Enemy {
 
         this.move(currentDirection.x, currentDirection.y, 0.1);
         
+    }
+    patternGenerator(name, rotationRate, amount, maxAngle, k = 8, movementSpeed = 2) {
+        const patterns = {
+            "Spiral" : new Spiral(this.pos.x, this.pos.y, rotationRate, amount, maxAngle, k, movementSpeed)
+        }
+        return patterns[name];
+    }
+}
+
+class Boss extends Enemy {
+    constructor(x, y, r, movementSpeed) {
+        const directions = [
+            {"dir" : createVector(150, 150), "pause" : 140, "fired" : false}, 
+            {"dir" : createVector(400, 600), "pause" : 200, "fired" : false}, 
+            {"dir" : createVector(width - 20, 800), "pause" : 140, "fired" : false}
+        ];
+        const patterns = [
+            {name: "Spiral", rotationRate: 2, amount: 50, maxAngle: 720, k: 12, movementSpeed: 3}
+        ]
+        super(x, y, r, movementSpeed, directions, patterns);
+    }
+}
+
+class Boss2 extends Enemy {
+    constructor(x, y, r, movementSpeed) {
+        const directions = [
+            {"dir" : createVector(20, 20), "pause" : 140, "fired" : false}, 
+            {"dir" : createVector(400, 600), "pause" : 200, "fired" : false}, 
+            {"dir" : createVector(width - 20, 800), "pause" : 140, "fired" : false}
+        ];
+        super(x, y, r, movementSpeed, directions);
     }
 }

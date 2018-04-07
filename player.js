@@ -17,6 +17,10 @@ class Player {
     }
     drawBullets() {
         for (var i = 0; i < this.bullets.length; i++) {
+            if(this.bullets[i].outOfBounds()) {
+                this.bullets.splice(i, 1);
+                continue;
+            }
             this.bullets[i].update();
             for(var j = 0; j < enemies.length; j++) {
                 if(this.bullets[i].checkCollision(enemies[j])) {
