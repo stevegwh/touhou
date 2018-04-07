@@ -3,7 +3,7 @@ let patterns = [];
 let bullets = [];
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(600, 800);
   angleMode(DEGREES);
   stroke(255);
   strokeWeight(4);
