@@ -29,3 +29,23 @@ class Bullet {
         return true;
     }
 } 
+
+class PowerUp extends Bullet {
+    constructor(type, x, y, vx, vy, speed) {
+        super(x, y, vx, vy, speed)
+        this.type = type;
+    }
+    draw() {
+        if(this.type === "power") {
+            push();
+            fill(255, 0, 0);
+            ellipse(this.pos.x, this.pos.y, this.r * 2);
+            pop();
+        } else if(this.type === "score") {
+            push();
+            fill(0, 0, 255);
+            ellipse(this.pos.x, this.pos.y, this.r * 2);
+            pop();
+        }
+    }
+}

@@ -8,6 +8,8 @@ class Player {
         this.lastShot = 10;
         this.movementSpeed = 5;
         this.alive = true;
+        this.power = 0;
+        this.score = 0;
     }
     drawPlayer() {
         push();
@@ -21,13 +23,24 @@ class Player {
                 this.bullets.splice(i, 1);
                 continue;
             }
+
             this.bullets[i].update();
+
             for(var j = 0; j < enemies.length; j++) {
                 if(this.bullets[i].checkCollision(enemies[j])) {
+                    this.pushPowerUp(j);
                     this.bullets.splice(i, 1);
                     enemies.splice(j, 1);
                 }
             }
+        }
+    }
+    pushPowerUp(j) {
+        const randNum = random(1, 10);
+        if(randNum >= 5) {
+            powerups.push(new PowerUp("power", enemies[j].pos.x, enemies[j].pos.y, 0, 2, 0.5));
+        } else {
+            powerups.push(new PowerUp("score", enemies[j].pos.x, enemies[j].pos.y, 0, 2, 0.5));
         }
     }
     update() {

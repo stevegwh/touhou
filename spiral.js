@@ -1,5 +1,5 @@
 class Spiral {
-    constructor(x, y, rotationRate, amount, maxAngle, k = 8, movementSpeed = 2) {
+    constructor(x, y, rotationRate, amount, maxAngle, k, movementSpeed) {
         this.dt = 0; //delta time
         this.amount = amount; //amount of bullets to load
         this.count = 1; //says when to push new bullet
