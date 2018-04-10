@@ -16,19 +16,17 @@ class Bullet {
     }
     checkCollision(d2, offset = 0) {
         let d = int(dist(this.pos.x, this.pos.y, d2.pos.x, d2.pos.y));
-        if(d <= this.r + (d2.r - offset)) {
-            return true;
-        }
+        return d <= this.r + (d2.r - offset);
     }
     outOfBounds() {
         const offset = 100;
-        if(this.pos.x > width + offset || 
-            this.pos.x < 0 - offset || 
-            this.y > height + offset || 
+        if (this.pos.x > width + offset ||
+            this.pos.x < 0 - offset ||
+            this.y > height + offset ||
             this.y < 0 - offset)
-        return true;
+            return true;
     }
-} 
+}
 
 class PowerUp extends Bullet {
     constructor(type, x, y, vx, vy, speed) {
@@ -36,12 +34,12 @@ class PowerUp extends Bullet {
         this.type = type;
     }
     draw() {
-        if(this.type === "power") {
+        if (this.type === "power") {
             push();
             fill(255, 0, 0);
             ellipse(this.pos.x, this.pos.y, this.r * 2);
             pop();
-        } else if(this.type === "score") {
+        } else if (this.type === "score") {
             push();
             fill(0, 0, 255);
             ellipse(this.pos.x, this.pos.y, this.r * 2);

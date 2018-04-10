@@ -17,7 +17,7 @@ class Player {
         ellipse(this.pos.x, this.pos.y, this.r);
         pop();
     }
-    drawBullets() {
+    updateBullets() {
         for (var i = 0; i < this.bullets.length; i++) {
             if(this.bullets[i].outOfBounds()) {
                 this.bullets.splice(i, 1);
@@ -50,7 +50,7 @@ class Player {
         }
         this.shotTimer++;
         this.drawPlayer();
-        this.drawBullets();
+        this.updateBullets();
         if(keyIsDown(87) || keyIsDown(83) || keyIsDown(68) || keyIsDown(65)) {
             this.pos.add(this.velocity);
         } else {
