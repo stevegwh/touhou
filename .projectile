@@ -1,0 +1,16 @@
+Press ? for neotree help
+/home/steve/sketchbook/touhou/
+ .git/
+ .vscode/
+ assets/
+ gimp/
+ libraries/
+ bullet.js
+ enemy.js
+ game to do
+ index.html
+ level.js
+ player.js
+ sketch.properties
+ spiral.js
+ spiralbullets.js

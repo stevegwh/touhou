@@ -22,6 +22,6 @@ class Spiral {
     loadBullet() {
         const segment = this.maxAngle / this.amount;
         const angle = segment * this.count;
-        bullets.push(new Bullet(this.pos.x, this.pos.y, cos(angle * this.k), sin(angle * this.k), this.movementSpeed));
+        level.bullets.push(new Bullet(this.pos.x, this.pos.y, cos(angle * this.k), sin(angle * this.k), this.movementSpeed));
     }
 }

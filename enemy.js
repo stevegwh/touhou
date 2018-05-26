@@ -206,7 +206,7 @@ class Spinner extends Enemy {
 
 }
 
-class regularMob extends Enemy {
+class RegularMob extends Enemy {
     constructor(x, y, r, movementSpeed) {
         const directions = [];
         const color = [0, 255, 100];
