@@ -12,10 +12,10 @@ function setup() {
     stroke(255);
     strokeWeight(4);
     background(0);
-    level = new Level(0);
+    game = new Game(0);
     player = new Player();
 
-    level.leveldata = [
+    game.leveldata = [
         {
             "waves" : [
                 {
@@ -41,7 +41,7 @@ function setup() {
 }
 
 function draw() {
-    level.update();
+    game.update();
 }
 
 

@@ -215,7 +215,7 @@ class RegularMob extends Enemy {
     }
     update() {
         this.a++;
-        this.pos.x -= cos(this.a) * random(2, 4);
+        this.pos.x -= cos(this.a);
         this.drawEnemy();
         this.pos.add(this.velocity);
         this.velocity.add(this.acc);

@@ -26,11 +26,11 @@ class Player {
 
             this.bullets[i].update();
 
-            for(var j = 0; j < level.enemies.length; j++) {
-                if(this.bullets[i] && this.bullets[i].checkCollision(level.enemies[j])) {
+            for(var j = 0; j < game.enemies.length; j++) {
+                if(this.bullets[i] && this.bullets[i].checkCollision(game.enemies[j])) {
                     this.pushPowerUp(j);
                     this.bullets.splice(i, 1);
-                    level.enemies.splice(j, 1);
+                    game.enemies.splice(j, 1);
                 }
             }
         }
@@ -38,9 +38,9 @@ class Player {
     pushPowerUp(j) {
         const randNum = random(1, 10);
         if(randNum >= 5) {
-            level.powerups.push(new PowerUp("power",level.enemies[j].pos.x,level.enemies[j].pos.y, 0, 2, 0.5));
+            game.powerups.push(new PowerUp("power",game.enemies[j].pos.x,game.enemies[j].pos.y, 0, 2, 0.5));
         } else {
-            level.powerups.push(new PowerUp("score",level.enemies[j].pos.x,level.enemies[j].pos.y, 0, 2, 0.5));
+            game.powerups.push(new PowerUp("score",game.enemies[j].pos.x,game.enemies[j].pos.y, 0, 2, 0.5));
         }
     }
     update() {
