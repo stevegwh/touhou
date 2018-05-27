@@ -1,7 +1,24 @@
 TODO
 --------
-Create a level class that handles the background transitions, the layout of the enemies and when the boss initiates
-Tweak the Enemy class so their positions are randomized when initiated (to stop it being too boring)
-Figure out how to make waves of enemies that move in shapes (initiate the positions with a for loop, probably, think of Mario from CS50)
+[[]] = DONE
+Short
+=====
+[[Restict player to screen]] (Could be improved)
+[[Increase speed of bullets]]
 Create player to enemy collision detection
 Add sprites
+[[Change shot style regarding level of power]]
+
+Medium
+=====
+[[Give each enemy hit points]]
+Figure out how to make waves of enemies that move in shapes (initiate the positions with a for loop, probably, think of Mario from CS50)
+d
+d
+[[Add proper physics for power ups falling and sort out probability]] (Could be better)
+
+Long
+=====
+Improve player controls
+Create a level class that handles the background transitions, the layout of the enemies and when the boss initiates
+Tweak the Enemy class so their positions are randomized when initiated (to stop it being too boring)

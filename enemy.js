@@ -1,5 +1,5 @@
 class Enemy {
-    constructor(x, y, r, movementSpeed, directions, color) {
+    constructor(x, y, r, movementSpeed, directions, color, hp) {
         this.pos = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acc = createVector(0, 0);
@@ -10,6 +10,7 @@ class Enemy {
         this.directions = directions;
         this.dirCount = 0;
         this.pauseCount = 0;
+        this.hp = hp;
     }
     drawEnemy() {
         push();
@@ -181,6 +182,7 @@ class Boss2 extends Enemy {
 class Spinner extends Enemy {
     constructor(x, y, r, movementSpeed) {
         const color = [255, 255, 100];
+        const hp = 5;
         const directions = [{
                 "dir": createVector(x + 200, y + 400),
                 "pause": 140,
@@ -201,7 +203,7 @@ class Spinner extends Enemy {
                 "fired": false
             }
         ];
-        super(x, y, r, movementSpeed, directions, color);
+        super(x, y, r, movementSpeed, directions, color, hp);
     }
 
 }
@@ -210,7 +212,8 @@ class RegularMob extends Enemy {
     constructor(x, y, r, movementSpeed) {
         const directions = [];
         const color = [0, 255, 100];
-        super(x, y, r, movementSpeed, directions, color);
+        const hp = 1;
+        super(x, y, r, movementSpeed, directions, color, hp);
         this.a = 0;
     }
     update() {

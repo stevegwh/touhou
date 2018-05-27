@@ -1,12 +1,19 @@
 class Bullet {
-    constructor(x, y, vx, vy, speed) {
+    constructor(x, y, vx, vy, speed, bulletType = "primary") {
         this.pos = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acc = createVector(vx * speed, vy * speed);
         this.r = 10;
+        this.bulletType = bulletType;
     }
     draw() {
-        ellipse(this.pos.x, this.pos.y, this.r);
+        if(this.bulletType == "primary") {
+            fill(255);
+            ellipse(this.pos.x, this.pos.y, this.r);
+        } else if(this.bulletType == "secondary") {
+            fill(255,255,255, 0.5);
+            ellipse(this.pos.x, this.pos.y, this.r / 0.75);
+        }
     }
     update() {
         this.pos.add(this.velocity);
@@ -19,11 +26,8 @@ class Bullet {
         return d <= this.r + (d2.r - offset);
     }
     outOfBounds() {
-        const offset = 100;
-        if (this.pos.x > width + offset ||
-            this.pos.x < 0 - offset ||
-            this.y > height + offset ||
-            this.y < 0 - offset)
+        if (this.pos.x > width || this.pos.x < 0 ||
+            this.pos.y > height || this.pos.y < 0 )
             return true;
     }
 }
@@ -31,6 +35,7 @@ class Bullet {
 class PowerUp extends Bullet {
     constructor(type, x, y, vx, vy, speed) {
         super(x, y, vx, vy, speed)
+        this.gravity = createVector(0, 0.3);
         this.type = type;
     }
     draw() {
@@ -45,5 +50,17 @@ class PowerUp extends Bullet {
             ellipse(this.pos.x, this.pos.y, this.r * 2);
             pop();
         }
+    }
+    outOfBounds() {
+        if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height)
+            return true;
+    }
+    update() {
+        this.gravity.limit(0.3)
+        this.pos.add(this.velocity);
+        this.velocity.add(this.acc);
+        this.velocity.add(this.gravity);
+        this.acc.limit(0.25)
+        this.draw();
     }
 }

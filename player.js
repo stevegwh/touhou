@@ -25,12 +25,17 @@ class Player {
             }
 
             this.bullets[i].update();
-
+            //MESSY
             for(var j = 0; j < game.enemies.length; j++) {
                 if(this.bullets[i] && this.bullets[i].checkCollision(game.enemies[j])) {
-                    this.pushPowerUp(j);
+                    if(game.enemies[j].hp > 0) {
+                        const bulletPower = this.bullets[i].bulletType == "primary" ? 2 : 1;
+                        game.enemies[j].hp -= bulletPower;
+                    } else {
+                        this.pushPowerUp(j);
+                        game.enemies.splice(j, 1);
+                    }
                     this.bullets.splice(i, 1);
-                    game.enemies.splice(j, 1);
                 }
             }
         }
@@ -38,9 +43,12 @@ class Player {
     pushPowerUp(j) {
         const randNum = random(1, 10);
         if(randNum >= 5) {
-            game.powerups.push(new PowerUp("power",game.enemies[j].pos.x,game.enemies[j].pos.y, 0, 2, 0.5));
-        } else {
-            game.powerups.push(new PowerUp("score",game.enemies[j].pos.x,game.enemies[j].pos.y, 0, 2, 0.5));
+            const randNum2 = Math.floor(random(1, 10));
+            if(randNum2 % 2 == 0) {
+                game.powerups.push(new PowerUp("power",game.enemies[j].pos.x,game.enemies[j].pos.y, 0, -1, 3));
+            } else {
+                game.powerups.push(new PowerUp("score",game.enemies[j].pos.x,game.enemies[j].pos.y, 0, -1, 2));
+            }
         }
     }
     update() {
@@ -52,7 +60,10 @@ class Player {
         this.drawPlayer();
         this.updateBullets();
         if(keyIsDown(87) || keyIsDown(83) || keyIsDown(68) || keyIsDown(65)) {
-            this.pos.add(this.velocity);
+            const next = createVector(this.pos.x, this.pos.y);
+            next.add(this.velocity);
+            if(next.x > 0 && next.x < width && next.y > 0 && next.y < height)
+                this.pos.add(this.velocity);
         } else {
             this.velocity.mult(0);
         }
@@ -60,9 +71,22 @@ class Player {
             this.fire();
         } 
     }
+    loadShot() {
+        // if(this.power < 1) {
+        //     this.bullets.push(new Bullet(this.pos.x, this.pos.y, 0, -5, 3));
+        // }
+        if(this.power >= 0) {
+            this.bullets.push(new Bullet(this.pos.x - 10, this.pos.y, 0, -5, 3));
+            this.bullets.push(new Bullet(this.pos.x + 10, this.pos.y, 0, -5, 3));
+        }
+        if(this.power >= 0) {
+            this.bullets.push(new Bullet(this.pos.x - 10, this.pos.y, -2, -5, 3, "secondary"));
+            this.bullets.push(new Bullet(this.pos.x + 10, this.pos.y, 2, -5, 3, "secondary"));
+        }
+    }
     fire() {
         if (this.lastShot <= this.shotTimer) {
-            this.bullets.push(new Bullet(this.pos.x, this.pos.y, 0, -5, 1));
+            this.loadShot();
             this.shotTimer = 0;
         }
     }

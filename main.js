@@ -15,21 +15,6 @@ function setup() {
     game = new Game(0);
     player = new Player();
 
-    game.leveldata = [
-        {
-            "waves" : [
-                {
-                    "time" : 5,
-                    "enemies" : [new Spinner(40, -100, 15, 5), new Spinner(140, -100, 15, 5)]
-                },
-                {
-                    "time" : 10,
-                    "enemies" : [new RegularMob(40, -100, 15, 5), new RegularMob(80, -100, 15, 5),
-                                 new RegularMob(120, -100, 15, 5), new RegularMob(160, -100, 15, 5)]
-                }
-            ]
-        }
-    ]
   //enemies.push(new Spinner(40, -100, 15, 5))
   //enemies.push(new Spinner(60, -300, 15, 5))
 
