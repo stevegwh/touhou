@@ -1,7 +1,7 @@
 class Player {
     constructor() {
         this.pos = createVector(width/2, height-20);
-        this.r = 20;
+        this.r = 16;
         this.velocity = createVector(0, 0);
         this.bullets = [];
         this.shotTimer = 0;
@@ -10,12 +10,11 @@ class Player {
         this.alive = true;
         this.power = 0;
         this.score = 0;
+        this.sprite = loadImage("assets/reimu1.png");
     }
     drawPlayer() {
-        push();
-        fill(100, 100, 255);
-        ellipse(this.pos.x, this.pos.y, this.r);
-        pop();
+        image(this.sprite, this.pos.x - this.r, this.pos.y - this.r * 2);
+        // ellipse(this.pos.x, this.pos.y, this.r);
     }
     updateBullets() {
         for (var i = 0; i < this.bullets.length; i++) {

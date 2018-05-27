@@ -1,11 +1,12 @@
 class Enemy {
-    constructor(x, y, r, movementSpeed, directions, color, hp) {
+    constructor(x, y, r, movementSpeed, directions, color, hp, sprite) {
         this.pos = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acc = createVector(0, 0);
         this.movementSpeed = movementSpeed;
         this.r = r;
         this.color = color;
+        this.sprite = sprites[sprite];
         this.patterns = [];
         this.directions = directions;
         this.dirCount = 0;
@@ -13,10 +14,7 @@ class Enemy {
         this.hp = hp;
     }
     drawEnemy() {
-        push();
-        fill(this.color[0], this.color[1], this.color[2]);
-        ellipse(this.pos.x, this.pos.y, this.r);
-        pop();
+        image(this.sprite, this.pos.x - this.r, this.pos.y - this.r);
     }
     drawPattern() {
         for (var i = 0; i < this.patterns.length; i++) {
@@ -180,7 +178,7 @@ class Boss2 extends Enemy {
 }
 
 class Spinner extends Enemy {
-    constructor(x, y, r, movementSpeed) {
+    constructor(x, y, movementSpeed) {
         const color = [255, 255, 100];
         const hp = 5;
         const directions = [{
@@ -203,17 +201,19 @@ class Spinner extends Enemy {
                 "fired": false
             }
         ];
-        super(x, y, r, movementSpeed, directions, color, hp);
+        const r = 24;
+        super(x, y, r, movementSpeed, directions, color, hp, "spinner");
     }
 
 }
 
 class RegularMob extends Enemy {
-    constructor(x, y, r, movementSpeed) {
+    constructor(x, y, movementSpeed) {
         const directions = [];
         const color = [0, 255, 100];
         const hp = 1;
-        super(x, y, r, movementSpeed, directions, color, hp);
+        const r = 16;
+        super(x, y, r, movementSpeed, directions, color, hp, "regularMob");
         this.a = 0;
     }
     update() {

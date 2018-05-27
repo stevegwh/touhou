@@ -1,13 +1,19 @@
-var spiral, spiral2, rose, enemy, player, bg1, bg2, mySound;
+var player, mySound, sprites;
 
 
 function preload() {
     soundFormats('mp3', 'ogg');
     mySound = loadSound('assets/stage1.ogg');
+    sprites = {
+        power : loadImage('assets/power_item.png'),
+        score : loadImage('assets/score_item.png'),
+        regularMob : loadImage('assets/regularMob.png'),
+        spinner : loadImage('assets/spinner.png')
+    };
 }
 
 function setup() {
-    createCanvas(600, 800);
+    createCanvas(512, 800);
     angleMode(DEGREES);
     stroke(255);
     strokeWeight(4);

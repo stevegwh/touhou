@@ -4,7 +4,7 @@ class Level {
     generateRow(startX, startY, amount, gap, speed) {
         const arr = [];
         for(var i = 0; i < amount; i++) {
-            arr.push(new RegularMob(startX + i * gap, startY, 10, speed))
+            arr.push(new RegularMob(startX + i * gap, startY, speed))
         }
         return arr;
     }
@@ -33,7 +33,7 @@ class LevelOne extends Level {
         return [
                 {
                     "time" : 5,
-                    "enemies" : [new Spinner(40, -100, 15, 5), new Spinner(140, -100, 15, 5)],
+                    "enemies" : [new Spinner(40, -100, 5), new Spinner(140, -100, 5)],
                     "spawned" : false
                 },
                 {

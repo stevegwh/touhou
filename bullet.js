@@ -3,7 +3,7 @@ class Bullet {
         this.pos = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acc = createVector(vx * speed, vy * speed);
-        this.r = 10;
+        this.r = 9;
         this.bulletType = bulletType;
     }
     draw() {
@@ -37,19 +37,10 @@ class PowerUp extends Bullet {
         super(x, y, vx, vy, speed)
         this.gravity = createVector(0, 0.3);
         this.type = type;
+        this.sprite = sprites[type];
     }
     draw() {
-        if (this.type === "power") {
-            push();
-            fill(255, 0, 0);
-            ellipse(this.pos.x, this.pos.y, this.r * 2);
-            pop();
-        } else if (this.type === "score") {
-            push();
-            fill(0, 0, 255);
-            ellipse(this.pos.x, this.pos.y, this.r * 2);
-            pop();
-        }
+        image(this.sprite, this.pos.x - this.r, this.pos.y - this.r);
     }
     outOfBounds() {
         if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height)

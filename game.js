@@ -23,9 +23,9 @@ class Game {
         this.bg1y += 1;
         this.bg2y += 1;
         if (this.bg1y > height) {
-            this.bg1y = -800;
+            this.bg1y = -1024;
         } else if (this.bg2y > height) {
-            this.bg2y = -800;
+            this.bg2y = -1024;
         }
 
     }
@@ -82,11 +82,11 @@ class Game {
     update() {
         this.timer++;
         this.updateBG();
-        player.update();
         this.updateBullets();
         this.updateEnemies();
         this.updatePowerUps();
         this.level.update(this.timer);
+        player.update();
     }
 
 }
