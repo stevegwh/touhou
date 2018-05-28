@@ -6,10 +6,9 @@ function preload() {
     mySound = loadSound('assets/stage1.ogg');
     sprites = {
         player : loadImage('assets/reimu.png'),
+        enemy : loadImage('assets/enemy.png'),
         power : loadImage('assets/power_item.png'),
         score : loadImage('assets/score_item.png'),
-        regularMob : loadImage('assets/regularMob.png'),
-        spinner : loadImage('assets/spinner.png')
     };
 }
 

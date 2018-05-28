@@ -12,9 +12,11 @@ class Enemy {
         this.dirCount = 0;
         this.pauseCount = 0;
         this.hp = hp;
+        this.sprite = new Sprite(sprites[sprite.name], sprite.w, sprite.h,
+                                 sprite.maxFrames, sprite.posX, sprite.posY);
     }
     drawEnemy() {
-        image(this.sprite, this.pos.x - this.r, this.pos.y - this.r);
+        this.sprite.animate(this.pos.x, this.pos.y, this.r);
     }
     drawPattern() {
         for (var i = 0; i < this.patterns.length; i++) {
@@ -202,7 +204,15 @@ class Spinner extends Enemy {
             }
         ];
         const r = 24;
-        super(x, y, r, movementSpeed, directions, color, hp, "spinner");
+        const sprite = {
+            "name" : "enemy",
+            "w" : 48,
+            "h" : 48,
+            "maxFrames" : 3,
+            "posX" : 0,
+            "posY" : 128
+        };
+        super(x, y, r, movementSpeed, directions, color, hp, sprite);
     }
 
 }
@@ -213,7 +223,15 @@ class RegularMob extends Enemy {
         const color = [0, 255, 100];
         const hp = 1;
         const r = 16;
-        super(x, y, r, movementSpeed, directions, color, hp, "regularMob");
+        const sprite = {
+            "name" : "enemy",
+            "w" : 32,
+            "h" : 32,
+            "maxFrames" : 3,
+            "posX" : 0,
+            "posY" : 0
+        };
+        super(x, y, r, movementSpeed, directions, color, hp, sprite);
         this.a = 0;
     }
     update() {

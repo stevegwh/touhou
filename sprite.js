@@ -1,11 +1,12 @@
 class Sprite{
-    constructor() {
+    constructor(file, w, h, maxFrames, posX = 0, posY = 0) {
         this.w = w;
         this.h = h;
         this.file = file;
         this.maxFrames = maxFrames;
         this.frame = 1;
-        this.posx = 0;
+        this.posX = posX;
+        this.posY = posY;
         this.lastAnimation = 5;
         this.animationTimer = 0;
     }
@@ -19,8 +20,8 @@ class Sprite{
         } else {
             this.animationTimer++;
         }
-        this.posx = this.w * this.frame;
-        image(this.sprite.file, sourceX - sourceR, sourceY - sourceR * 2, this.w,
-              this.h, this.posx, 0, this.w, this.h);
+        this.posX = this.w * this.frame;
+        image(this.file, sourceX - sourceR, sourceY - sourceR * 2, this.w,
+              this.h, this.posX, this.posY, this.w, this.h);
     }
 }

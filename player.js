@@ -6,35 +6,21 @@ class Player {
         this.bullets = [];
         this.shotTimer = 0;
         this.lastShot = 10;
-        this.animationTimer = 0;
-        this.lastAnimation = 5;
         this.movementSpeed = 5;
         this.alive = true;
         this.power = 0;
         this.score = 0;
-        this.sprite = {
-            "file": sprites["player"],
-            "w": 32,
-            "h": 48,
-            "maxFrames": 8,
-            "frame": 1,
-            "posx": 0
-        };
-        this.frame = 1;
+        this.sprite = new Sprite(sprites["player"], 32, 48, 8);
     }
     drawPlayer() {
-        if(this.animationTimer > this.lastAnimation) {
-            this.sprite.frame++;
-            if(this.sprite.frame == this.sprite.maxFrames) {
-                this.sprite.frame = 1;
-            }
-            this.animationTimer = 0;
-        } else {
-            this.animationTimer++;
+        if(this.velocity.x == 0) {
+            this.sprite.posY = 0;
+        } else if (this.velocity.x < 0) {
+            this.sprite.posY = 48;
+        } else if(this.velocity.x > 0) {
+            this.sprite.posY = 96;
         }
-        this.sprite.posx = this.sprite.w * this.sprite.frame;
-        image(this.sprite.file, this.pos.x - this.r, this.pos.y - this.r * 2, this.sprite.w,
-              this.sprite.h, this.sprite.posx, 0, this.sprite.w, this.sprite.h);
+        this.sprite.animate(this.pos.x, this.pos.y, this.r);
         // ellipse(this.pos.x, this.pos.y, this.r);
     }
     updateBullets() {
