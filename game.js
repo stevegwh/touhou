@@ -6,7 +6,7 @@ class Game {
         this.bg1 = this.loadBG()
         this.bg2 = this.loadBG();
         this.bg1y = 0;
-        this.bg2y = -820;
+        this.bg2y = -1024;
         this.level = this.getLevel(1);
         this.loadSound(1);
         this.timer = 0;
@@ -20,8 +20,8 @@ class Game {
     updateBG() {
         image(this.bg1, 0, this.bg1y);
         image(this.bg2, 0, this.bg2y);
-        this.bg1y += 1;
-        this.bg2y += 1;
+        this.bg1y += 2;
+        this.bg2y += 2;
         if (this.bg1y > height) {
             this.bg1y = -1024;
         } else if (this.bg2y > height) {

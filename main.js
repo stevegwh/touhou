@@ -5,6 +5,7 @@ function preload() {
     soundFormats('mp3', 'ogg');
     mySound = loadSound('assets/stage1.ogg');
     sprites = {
+        player : loadImage('assets/reimu.png'),
         power : loadImage('assets/power_item.png'),
         score : loadImage('assets/score_item.png'),
         regularMob : loadImage('assets/regularMob.png'),

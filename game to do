@@ -11,6 +11,7 @@ Create player to enemy collision detection
 
 Medium
 =====
+Make sprite class
 Add side section with score etc and redefine borders of game (might be frustrating)
 [[Give each enemy hit points]]
 Figure out how to make waves of enemies that move in shapes (initiate the positions with a for loop, probably, think of Mario from CS50)
