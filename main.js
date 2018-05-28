@@ -40,3 +40,7 @@ function draw() {
 function keyPressed() {
     player.move(keyCode);
 }
+
+function keyReleased() {
+    player.release(keyCode);
+}

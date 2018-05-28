@@ -19,7 +19,7 @@ class Enemy {
         this.sprite.animate(this.pos.x, this.pos.y, this.r);
     }
     drawPattern() {
-        for (var i = 0; i < this.patterns.length; i++) {
+        for (let i = 0; i < this.patterns.length; i++) {
             this.patterns[i].update();
         }
     }

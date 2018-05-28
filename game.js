@@ -3,7 +3,7 @@ class Game {
         this.bullets = [];
         this.enemies = [];
         this.powerups = [];
-        this.bg1 = this.loadBG()
+        this.bg1 = this.loadBG();
         this.bg2 = this.loadBG();
         this.bg1y = 0;
         this.bg2y = -1024;
@@ -37,47 +37,42 @@ class Game {
         mySound.play();
     }
     updateEnemies() {
-        for (let i = 0; i < this.enemies.length; i++) {
-            this.enemies[i].update();
-            if (this.enemies[i].outOfBounds()) {
-                this.enemies.splice(i, 1);
-            }
-        }
+        this.enemies.forEach((e, i, a) => {
+            e.update();
+            if(e.outOfBounds())
+                a.splice(i, 1);
+        });
     }
 
     updateBullets() {
-        for (let i = 1; i < this.bullets.length; i++) {
-            if (this.bullets[i].outOfBounds()) {
-                this.bullets.splice(i, 1);
-                continue;
+        this.bullets.forEach((e, i, a) => {
+            if(e.outOfBounds()) {
+                a.splice(i, 1);
+                return;
             }
-            this.bullets[i].update();
-            if (this.bullets[i].checkCollision(player, 20)) {
+            e.update();
+            if(e.checkCollision(player, 20)) {
                 player.alive = false;
-                this.bullets.splice(i, 1);
+                a.splice(i, 1);
             }
-        }
+
+        });
     }
 
     updatePowerUps() {
-        for (let i = 1; i < this.powerups.length; i++) {
-            if (this.powerups[i].outOfBounds()) {
-                this.powerups.splice(i, 1);
-                continue;
+        this.powerups.forEach((e, i, a) => {
+            if(e.outOfBounds()) {
+                a.splice(i, 1);
+                return;
             }
-            this.powerups[i].update();
-
-            if (this.powerups[i].checkCollision(player, -20)) {
-                if (this.powerups[i].type === "power") {
-                    player.power++;
-                    console.log("power: " + player.power);
-                } else if (this.powerups[i].type === "score") {
-                    player.score++;
-                    console.log("score: " + player.score);
-                }
-                this.powerups.splice(i, 1);
+            e.update();
+            if(e.checkCollision(player, -20)) {
+                e.type === "power" ? player.power++ : player.score++;
+                console.log("power:" + player.power);
+                console.log("score:" + player.score);
+                a.splice(i, 1);
             }
-        }
+        });
     }
     update() {
         this.timer++;

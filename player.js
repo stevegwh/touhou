@@ -5,6 +5,7 @@ class Player {
         this.velocity = createVector(0, 0);
         this.bullets = [];
         this.shotTimer = 0;
+        this.slow = false;
         this.lastShot = 10;
         this.movementSpeed = 5;
         this.alive = true;
@@ -24,37 +25,35 @@ class Player {
         // ellipse(this.pos.x, this.pos.y, this.r);
     }
     updateBullets() {
-        for (var i = 0; i < this.bullets.length; i++) {
-            if(this.bullets[i].outOfBounds()) {
-                this.bullets.splice(i, 1);
-                continue;
+        this.bullets.forEach((b, i, a1) => {
+            if(b.outOfBounds()) {
+                a1.splice(i, 1);
+                return;
             }
 
-            this.bullets[i].update();
-            //MESSY
-            for(var j = 0; j < game.enemies.length; j++) {
-                if(this.bullets[i] && this.bullets[i].checkCollision(game.enemies[j])) {
-                    if(game.enemies[j].hp > 0) {
-                        const bulletPower = this.bullets[i].bulletType == "primary" ? 2 : 1;
-                        game.enemies[j].hp -= bulletPower;
+            b.update();
+
+            game.enemies.forEach((e, j, a2) => {
+                if(b && b.checkCollision(e)) {
+                    if(e.hp > 0) {
+                        // Probably shouldn't define the power here
+                        const power = b.bulletType == "primary" ? 1: 0.4;
+                        e.hp -= power;
                     } else {
                         this.pushPowerUp(j);
-                        game.enemies.splice(j, 1);
+                        a2.splice(j, 1);
                     }
-                    this.bullets.splice(i, 1);
+                    a1.splice(i, 1);
                 }
-            }
-        }
+            });
+        });
     }
     pushPowerUp(j) {
-        const randNum = random(1, 10);
-        if(randNum >= 5) {
-            const randNum2 = Math.floor(random(1, 10));
-            if(randNum2 % 2 == 0) {
-                game.powerups.push(new PowerUp("power",game.enemies[j].pos.x,game.enemies[j].pos.y, 0, -1, 3));
-            } else {
-                game.powerups.push(new PowerUp("score",game.enemies[j].pos.x,game.enemies[j].pos.y, 0, -1, 2));
-            }
+        const n1 = random(1, 10);
+        if(n1 >= 5) {
+            const n2 = Math.floor(random(1, 10));
+            const t = n2 % 2 == 0 ? "power" : "score";
+            game.powerups.push(new PowerUp(t,game.enemies[j].pos.x,game.enemies[j].pos.y, 0, -1, 3));
         }
     }
     update() {
@@ -62,9 +61,10 @@ class Player {
             this.pos.x = -500;
             return;
         }
-        this.shotTimer++;
         this.drawPlayer();
         this.updateBullets();
+
+        //MESSY
         if(keyIsDown(87) || keyIsDown(83) || keyIsDown(68) || keyIsDown(65)) {
             const next = createVector(this.pos.x, this.pos.y);
             next.add(this.velocity);
@@ -78,40 +78,62 @@ class Player {
         } 
     }
     loadShot() {
+        const a = this.bullets;
         // if(this.power < 1) {
-        //     this.bullets.push(new Bullet(this.pos.x, this.pos.y, 0, -5, 3));
+        //     a.push(new Bullet(this.pos.x, this.pos.y, 0, -5, 3));
         // }
         if(this.power >= 0) {
-            this.bullets.push(new Bullet(this.pos.x - 10, this.pos.y, 0, -5, 3));
-            this.bullets.push(new Bullet(this.pos.x + 10, this.pos.y, 0, -5, 3));
+            a.push(new Bullet(this.pos.x - 10, this.pos.y, 0, -5, 3));
+            a.push(new Bullet(this.pos.x + 10, this.pos.y, 0, -5, 3));
         }
         if(this.power >= 0) {
-            this.bullets.push(new Bullet(this.pos.x - 10, this.pos.y, -2, -5, 3, "secondary"));
-            this.bullets.push(new Bullet(this.pos.x + 10, this.pos.y, 2, -5, 3, "secondary"));
+            a.push(new Bullet(this.pos.x - 10, this.pos.y, -2, -5, 3, "secondary"));
+            a.push(new Bullet(this.pos.x + 10, this.pos.y, 2, -5, 3, "secondary"));
         }
     }
     fire() {
+        this.shotTimer++;
         if (this.lastShot <= this.shotTimer) {
             this.loadShot();
             this.shotTimer = 0;
         }
     }
     move(e) {
-        switch (e) {
-            case 87: //W
-                this.velocity.y = -this.movementSpeed
-                break;
-            case 83: //S
-                this.velocity.y = this.movementSpeed;
-                break;
-            case 68: //A
-                this.velocity.x = this.movementSpeed;
-                break;
-            case 65: //D
-                this.velocity.x = -this.movementSpeed;
-                break
-            default:
-                break;
+        // switch (e) {
+        //     case 87: //W
+        //         this.velocity.y = -this.movementSpeed
+        //         break;
+        //     case 83: //S
+        //         this.velocity.y = this.movementSpeed;
+        //         break;
+        //     case 68: //A
+        //         this.velocity.x = this.movementSpeed;
+        //         break;
+        //     case 65: //D
+        //         this.velocity.x = -this.movementSpeed;
+        //         break
+        //     default:
+        //         break;
+        // }
+        if(e == 87 && !keyIsDown(83)) {
+            this.velocity.y = -this.movementSpeed
         }
-    } 
+        if(e == 83 && !keyIsDown(87)) {
+            this.velocity.y = this.movementSpeed
+        }
+        if(e == 68 && !keyIsDown(65)) {
+            this.velocity.x = this.movementSpeed
+        }
+        if(e == 65 && !keyIsDown(68)) {
+            this.velocity.x = -this.movementSpeed
+        }
+    }
+    release(e) {
+        if(e == 87 || e == 83) {
+            this.velocity.y = 0;
+        }
+        if(e == 68 || e == 65) {
+            this.velocity.x = 0;
+        }
+    }
 }
